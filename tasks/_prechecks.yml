@@ -1,0 +1,11 @@
+---
+- name: VPN | Checks | User names
+  fail:
+    msg: "One or more user names are missed"
+  failed_when: item.name is not defined
+  with_items: "{{ ipsec_clients }}"
+
+- name: VPN | Checks | OS type
+  fail:
+    msg: "Sorry, your OS type is not supported"
+  when: ansible_distribution != "Ubuntu"

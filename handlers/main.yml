@@ -1,0 +1,6 @@
+---
+- name: IPSec restart
+  command: ipsec restart
+
+- name: IPSec secrets reload
+  command: ipsec secrets

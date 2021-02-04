@@ -1,0 +1,8 @@
+{
+  "uuid": "{{ identifier.stdout }}",
+  "name": "{{ ipsec_server_name }}",
+  "type": "ikev2-eap",
+  "remote": {
+    "addr": "{{ ipsec_server_name }}"
+  }
+}

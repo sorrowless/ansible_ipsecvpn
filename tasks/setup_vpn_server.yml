@@ -1,0 +1,90 @@
+---
+- name: VPN | Installation | Install additional packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - software-properties-common
+    - iptables-persistent
+    - moreutils
+    - dnsutils
+  register: task_result
+  until: task_result is success
+  retries: 3
+  delay: 2
+
+- name: VPN | Installation | Enable verse repositories
+  command: "add-apt-repository {{ item }}"
+  with_items:
+    - universe
+    - restricted
+    - multiverse
+  register: task_result
+  until: task_result is success
+  retries: 3
+  delay: 2
+
+- name: VPN | Installation | Install latest version of openswan
+  package:
+    name:
+      - language-pack-en
+      - strongswan
+      - libstrongswan-standard-plugins
+      - strongswan-libcharon
+      - libcharon-standard-plugins
+      - libcharon-extra-plugins
+      - uuid-runtime
+    state: present
+  register: task_result
+  until: task_result is success
+  retries: 10
+  delay: 2
+
+- name: VPN | Configuration | Ensure client config dif
+  file:
+    state: directory
+    path: "{{ ipsec_client_config_dir }}"
+    mode: 0755
+    owner: root
+    group: root
+
+- name: VPN | Configuration | Ensure TLS certs
+  copy:
+    remote_src: yes
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - src: "{{ ipsec_cert_path }}"
+      dest: /etc/ipsec.d/certs/cert.pem
+    - src: "{{ ipsec_cacert_path }}"
+      dest: /etc/ipsec.d/cacerts/chain.pem
+    - src: "{{ ipsec_private_key_path }}"
+      dest: /etc/ipsec.d/private/private.pem
+
+- name: VPN | Configuration | Ensure ipsec config
+  template:
+    src: ipsec.conf
+    dest: /etc/ipsec.conf
+    mode: 0644
+    owner: root
+    group: root
+  notify: IPSec restart
+
+- name: VPN | Configuration | Ensure ipsec secrets
+  template:
+    src: ipsec.secrets
+    dest: /etc/ipsec.secrets
+    mode: 0600
+    owner: root
+    group: root
+  notify: IPSec secrets reload
+
+- name: Ensure local dir to store configs in
+  delegate_to: localhost
+  become: no
+  file:
+    state: directory
+    path: /tmp/ipsec_vpn

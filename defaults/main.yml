@@ -1,0 +1,22 @@
+---
+# Server will be accessible thru this DNS name
+ipsec_server_name: localhost
+# Directory to store clients configs in
+ipsec_client_config_dir: /etc/ipsec.d/client_configs
+# Whether we should do iptables configuration by this role
+ipsec_override_iptables: true
+# VPN IP pool
+ipsec_vpn_network: 10.77.0.0/16
+# DNS servers to use
+ipsec_vpn_dns: "1.1.1.1,8.8.8.8"
+# TLS data path
+ipsec_cert_path: ""
+ipsec_cacert_path: ""
+ipsec_private_key_path: ""
+# Clients list. Have to look like
+# clients:
+#   - name: user
+#     secret: password
+ipsec_clients: []
+# Prefix to append to local cert names
+ipsec_prefix: ipsec

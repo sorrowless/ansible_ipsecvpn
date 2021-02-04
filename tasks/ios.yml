@@ -1,0 +1,40 @@
+---
+- name: Check for client configuration
+  stat:
+    path: "{{ ipsec_client_config_dir }}/{{ client.name }}.mobileconfig"
+  register: client_mobileconfig
+
+- name: Create new payload identifier
+  command: uuidgen
+  register: payload_identifier
+  when: not client_mobileconfig.stat.exists
+
+- name: Create new payload uuid
+  command: uuidgen
+  register: payload_uuid
+  when: not client_mobileconfig.stat.exists
+
+- name: Create second payload identifier
+  command: uuidgen
+  register: payload_identifier_second
+  when: not client_mobileconfig.stat.exists
+
+- name: Create second payload uuid
+  command: uuidgen
+  register: payload_uuid_second
+  when: not client_mobileconfig.stat.exists
+
+- name: Ensure client config
+  template:
+    src: mobileconfig
+    dest: "{{ ipsec_client_config_dir }}/{{ client.name }}.mobileconfig"
+    owner: root
+    group: root
+    mode: 0600
+  when: not client_mobileconfig.stat.exists
+
+- name: VPN | Client config creation | Fetch ios config to localhost
+  fetch:
+    src: "{{ ipsec_client_config_dir }}/{{ client.name }}.mobileconfig"
+    dest: "/tmp/ipsec_vpn/{{ ipsec_prefix }}_{{ client.name }}.mobileconfig"
+    flat: yes

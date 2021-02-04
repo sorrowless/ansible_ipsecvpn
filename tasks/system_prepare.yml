@@ -1,0 +1,14 @@
+---
+- name: VPN | Configuration | Allow IP forwarding for IPv4
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    sysctl_set: yes
+    reload: yes
+
+- name: VPN | Configuration | Set no pmtu discovery
+  sysctl:
+    name: net.ipv4.ip_no_pmtu_disc
+    value: 1
+    sysctl_set: yes
+    reload: yes
