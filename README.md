@@ -1,9 +1,9 @@
 # sbog/ipsecvpn
 
 [![Build Status](https://travis-ci.com/sorrowless/ansible_ipsecvpn.svg?branch=master)](https://travis-ci.com/sorrowless/ansible_ipsecvpn)
-[![Ansible Role](https://img.shields.io/ansible/role/42562)](https://galaxy.ansible.com/sorrowless/ipsecvpn)
-[![Ansible Quality Score](https://img.shields.io/ansible/quality/42562)](https://galaxy.ansible.com/sorrowless/ipsecvpn)
-[![Ansible Role](https://img.shields.io/ansible/role/d/42562)](https://galaxy.ansible.com/sorrowless/ipsecvpn)
+[![Ansible Role](https://img.shields.io/ansible/role/52949)](https://galaxy.ansible.com/sorrowless/ipsecvpn)
+[![Ansible Quality Score](https://img.shields.io/ansible/quality/52949)](https://galaxy.ansible.com/sorrowless/ipsecvpn)
+[![Ansible Role](https://img.shields.io/ansible/role/d/52949)](https://galaxy.ansible.com/sorrowless/ipsecvpn)
 [![GitHub](https://img.shields.io/github/license/sorrowless/ansible_ipsecvpn)](https://github.com/sorrowless/ansible_ipsecvpn/blob/master/LICENSE)
 
 An Ansible role which installs and configures IPSec VPN on Linux

@@ -3,6 +3,7 @@ galaxy_info:
   author: Stan Bogatkin
   description: Ansible role to deploy IPSec VPN server
   company: Personal project
+  role_name: ipsecvpn
 
   license: Apache
 
