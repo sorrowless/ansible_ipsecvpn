@@ -1,0 +1,20 @@
+== Windows ==
+You will need Windows 10 Pro or above. Please run the following commands in PowerShell:
+
+$Response = Invoke-WebRequest -UseBasicParsing -Uri https://valid-isrgrootx1.letsencrypt.org
+# ^ this line fixes a certificate lazy-loading bug: see https://github.com/jawj/IKEv2-setup/issues/126
+
+Add-VpnConnection -Name "{{ ipsec_server_name }}" -ServerAddress "{{ ipsec_server_name }}" -TunnelType IKEv2 -EncryptionLevel Maximum -AuthenticationMethod EAP -RememberCredential
+
+Set-VpnConnectionIPsecConfiguration -ConnectionName "{{ ipsec_server_name }}" -AuthenticationTransformConstants GCMAES256 -CipherTransformConstants GCMAES256 -EncryptionMethod GCMAES256 -IntegrityCheckMethod SHA384 -DHGroup ECP384 -PfsGroup ECP384 -Force
+
+
+# Run the following command to retain access to the local network (e.g. printers, file servers) while the VPN is connected.
+# On a home network, you probably want this. On a public network, you probably don't.
+
+Set-VpnConnection -Name "{{ ipsec_server_name }}" -SplitTunneling $True
+
+You will need to enter your chosen VPN username and password in order to connect.
+
+Username: {{ client.name }}
+Password: {{ client.secret }}

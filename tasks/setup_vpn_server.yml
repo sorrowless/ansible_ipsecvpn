@@ -48,22 +48,6 @@
     owner: root
     group: root
 
-- name: VPN | Configuration | Ensure TLS certs
-  copy:
-    remote_src: yes
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: root
-    group: root
-    mode: 0644
-  with_items:
-    - src: "{{ ipsec_cert_path }}"
-      dest: /etc/ipsec.d/certs/cert.pem
-    - src: "{{ ipsec_cacert_path }}"
-      dest: /etc/ipsec.d/cacerts/chain.pem
-    - src: "{{ ipsec_private_key_path }}"
-      dest: /etc/ipsec.d/private/private.pem
-
 - name: VPN | Configuration | Ensure ipsec config
   template:
     src: ipsec.conf

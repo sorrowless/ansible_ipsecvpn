@@ -3,11 +3,13 @@
   stat:
     path: "{{ ipsec_client_config_dir }}/{{ client.name }}.sswan"
   register: client_androidconfig
+  tags: ['ipsec_client_configs']
 
 - name: Create identifier
   command: uuidgen
   register: identifier
   when: not client_androidconfig.stat.exists
+  tags: ['ipsec_client_configs']
 
 - name: Ensure client config
   template:
@@ -17,9 +19,11 @@
     group: root
     mode: 0600
   when: not client_androidconfig.stat.exists
+  tags: ['ipsec_client_configs']
 
 - name: VPN | Client config creation | Fetch ios config to localhost
   fetch:
     src: "{{ ipsec_client_config_dir }}/{{ client.name }}.sswan"
     dest: "/tmp/ipsec_vpn/{{ ipsec_prefix }}_{{ client.name }}.sswan"
     flat: yes
+  tags: ['ipsec_client_configs']

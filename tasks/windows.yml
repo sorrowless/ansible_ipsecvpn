@@ -1,0 +1,23 @@
+---
+- name: Check for client configuration
+  stat:
+    path: "{{ ipsec_client_config_dir }}/{{ client.name }}.windows.txt"
+  register: client_windowsconfig
+  tags: ['ipsec_client_configs']
+
+- name: Ensure client config
+  template:
+    src: windows.txt
+    dest: "{{ ipsec_client_config_dir }}/{{ client.name }}.windows.txt"
+    owner: root
+    group: root
+    mode: 0600
+  when: not client_windowsconfig.stat.exists
+  tags: ['ipsec_client_configs']
+
+- name: VPN | Client config creation | Fetch windows config to localhost
+  fetch:
+    src: "{{ ipsec_client_config_dir }}/{{ client.name }}.windows.txt"
+    dest: "/tmp/ipsec_vpn/{{ ipsec_prefix }}_{{ client.name }}.windows.txt"
+    flat: yes
+  tags: ['ipsec_client_configs']
