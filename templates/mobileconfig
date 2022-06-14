@@ -32,6 +32,10 @@
         <true/>
         <key>ExtendedAuthEnabled</key>
         <true/>
+        <key>AuthName</key>
+        <string>{{ client.name }}</string>
+        <key>AuthPassword</key>
+        <string>{{ client.secret }}</string>
         <key>IKESecurityAssociationParameters</key>
         <dict>
           <key>EncryptionAlgorithm</key>
