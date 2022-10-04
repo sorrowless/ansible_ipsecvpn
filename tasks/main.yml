@@ -28,6 +28,13 @@
     loop_var: client
   tags: ['ipsec_client_configs']
 
+- name: VPN | Installation | Ensure linux configs
+  include_tasks: linux.yml
+  loop: "{{ ipsec_clients }}"
+  loop_control:
+    loop_var: client
+  tags: ['ipsec_client_configs']
+
 - name: VPN | Installation | Ensure iptables rules
   include_tasks: iptables.yml
   tags: ['iptables']

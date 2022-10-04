@@ -1,0 +1,23 @@
+---
+- name: Check for client configuration
+  stat:
+    path: "{{ ipsec_client_config_dir }}/{{ client.name }}_linux.sh"
+  register: client_linuxconfig
+  tags: ['ipsec_client_configs']
+
+- name: Ensure client config
+  template:
+    src: linux.sh
+    dest: "{{ ipsec_client_config_dir }}/{{ client.name }}_linux.sh"
+    owner: root
+    group: root
+    mode: 0600
+  when: not client_linuxconfig.stat.exists
+  tags: ['ipsec_client_configs']
+
+- name: VPN | Client config creation | Fetch linux config to localhost
+  fetch:
+    src: "{{ ipsec_client_config_dir }}/{{ client.name }}_linux.sh"
+    dest: "/tmp/ipsec_vpn/{{ ipsec_prefix }}_{{ client.name }}_linux.sh"
+    flat: yes
+  tags: ['ipsec_client_configs']
