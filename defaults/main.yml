@@ -13,6 +13,8 @@ ipsec_vpn_dns: "1.1.1.1,8.8.8.8"
 ipsec_cert_path: ""
 ipsec_cacert_path: ""
 ipsec_private_key_path: ""
+# Type of private key. Available options: RSA, ESDSA
+ipsec_private_key_type: ECDSA
 # Clients list. Have to look like
 # clients:
 #   - name: user
