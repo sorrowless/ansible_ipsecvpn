@@ -1,6 +1,8 @@
 ---
 # Server will be accessible thru this DNS name
 ipsec_server_name: localhost
+# Custom IOS display name
+ipsec_ios_custom_display_name: "{{ ipsec_server_name }}"
 # Directory to store clients configs in
 ipsec_client_config_dir: /etc/ipsec.d/client_configs
 # Whether we should do iptables configuration by this role
@@ -20,5 +22,14 @@ ipsec_private_key_type: ECDSA
 #   - name: user
 #     secret: password
 ipsec_clients: []
+# Client auth type
+# available types: eap-mschapv2, eap-radius
+ipsec_client_auth_type: eap-mschapv2
+# In case of eap-radius auth, address of radius server
+ipsec_radius_server: ""
+# Radius server port
+ipsec_radius_port: 1812
+# Secret for auth on radius server
+ipsec_radius_secret: secret
 # Prefix to append to local cert names
 ipsec_prefix: ipsec

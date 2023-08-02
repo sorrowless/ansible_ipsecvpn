@@ -5,6 +5,11 @@
   failed_when: item.name is not defined
   with_items: "{{ ipsec_clients }}"
 
+- name: VPN | Checks | Auth types
+  fail:
+    msg: "Supported auth types are: eap-mschapv2, eap-radius"
+  failed_when: ipsec_client_auth_type != 'eap-mschapv2' or ipsec_client_auth_type != 'eap-radius'
+
 - name: VPN | Checks | OS type
   fail:
     msg: "Sorry, your OS type is not supported"

@@ -34,7 +34,9 @@
       - strongswan-libcharon
       - libcharon-standard-plugins
       - libcharon-extra-plugins
+      - libcharon-extauth-plugins
       - uuid-runtime
+      - libtss2-tcti-tabrmd0
     state: present
   register: task_result
   until: task_result is success
@@ -53,6 +55,15 @@
   template:
     src: ipsec.conf
     dest: /etc/ipsec.conf
+    mode: 0644
+    owner: root
+    group: root
+  notify: IPSec restart
+
+- name: VPN | Configuration | Ensure ipsec eap-radius config
+  template:
+    src: eap-radius.conf
+    dest: /etc/strongswan.d/charon/eap-radius.conf
     mode: 0644
     owner: root
     group: root
