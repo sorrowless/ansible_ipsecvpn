@@ -21,6 +21,7 @@ ipsec_private_key_type: ECDSA
 # clients:
 #   - name: user
 #     secret: password
+#     email: mail
 ipsec_clients: []
 # Client auth type
 # available types: eap-mschapv2, eap-radius
@@ -33,3 +34,13 @@ ipsec_radius_port: 1812
 ipsec_radius_secret: secret
 # Prefix to append to local cert names
 ipsec_prefix: ipsec
+# Additionally user VPN config can be sent to user email after creation. There
+# are needed options for that
+# ipsec_mail:
+#   host: smtp.google.com
+#   port: 587
+#   user: user
+#   secret: password
+#   subject: "VPN configuration"
+#   body: "Your new VPN configuration is in attach"
+ipsec_mail: {}

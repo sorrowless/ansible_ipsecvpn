@@ -12,6 +12,7 @@
     owner: root
     group: root
     mode: 0600
+  register: client_conf
   when: not client_linuxconfig.stat.exists
   tags: ['ipsec_client_configs']
 
@@ -20,4 +21,20 @@
     src: "{{ ipsec_client_config_dir }}/{{ client.name }}_linux.sh"
     dest: "/tmp/ipsec_vpn/{{ ipsec_prefix }}_{{ client.name }}_linux.sh"
     flat: yes
+  tags: ['ipsec_client_configs']
+
+- name: VPN | Client config sending | Send configs to user email
+  mail:
+    host: "{{ ipsec_mail.host }}"
+    port: "{{ ipsec_mail.port }}"
+    username: "{{ ipsec_mail.user }}"
+    sender: "{{ ipsec_mail.user }}"
+    password: "{{ ipsec_mail.secret }}"
+    to: "{{ client.email }}"
+    subject: "{{ ipsec_mail.subject }} (Linux confs)"
+    body: "{{ ipsec_mail.body }}"
+    attach: 
+      - "{{ ipsec_client_config_dir }}/{{ client.name }}_linux.sh"
+  when: client.email is defined and ipsec_mail.host is defined and client_conf.changed
+  failed_when: False
   tags: ['ipsec_client_configs']
