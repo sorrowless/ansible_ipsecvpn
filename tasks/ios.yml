@@ -55,7 +55,7 @@
     sender: "{{ ipsec_mail.user }}"
     password: "{{ ipsec_mail.secret }}"
     to: "{{ client.email }}"
-    subject: "{{ ipsec_mail.subject }} (IOS confs)"
+    subject: "{{ ipsec_mail.subject }} (IOS/Mac confs)"
     body: "{{ ipsec_mail.body }}"
     attach: 
       - "{{ ipsec_client_config_dir }}/{{ client.name }}.mobileconfig"

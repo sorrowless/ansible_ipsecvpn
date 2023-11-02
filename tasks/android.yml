@@ -40,7 +40,7 @@
     subject: "{{ ipsec_mail.subject }} (Android confs)"
     body: "{{ ipsec_mail.body }}"
     attach: 
-      - "{{ ipsec_client_config_dir }}/{{ client.name }}.mobileconfig"
+      - "{{ ipsec_client_config_dir }}/{{ client.name }}.sswan"
   when: client.email is defined and ipsec_mail.host is defined and client_conf.changed
   failed_when: False
   tags: ['ipsec_client_configs']
